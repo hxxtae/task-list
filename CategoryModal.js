@@ -1,26 +1,40 @@
-import { StyleSheet, View, Text, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Dimensions, ScrollView } from 'react-native';
 import { Modal } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function CategoryModal({ show, onClose }) {
 
   const windowHeight = Dimensions.get('window').height;
 
+  const onBtnClick = (e) => {
+    onClose();
+  }
+
+  const onOverlayTouch = (e) => {
+    onClose();
+  }
+
   return (
     <View>
-      <Modal visible={show} animationType='slide' transparent={true} onRequestClose={() => {
+      <Modal style={{position: 'relative'}} visible={show} animationType='slide' transparent={true} onRequestClose={() => {
         onClose();
       }}>
-      <Pressable onPress={() => onClose()} style={styles.overlay}>
+        <View style={styles.overlay} onTouchEnd={onOverlayTouch}></View>
         <View style={styles.modalView(windowHeight)}>
-          <Text style={styles.modalText}>Hello World!</Text>
           <Pressable
             style={[styles.button, styles.buttonClose]}
-            onPress={onClose}>
-            <Text style={styles.textStyle}>Hide Modal</Text>
-          </Pressable>
+            onPress={onBtnClick}>
+            <Ionicons name="close-circle-sharp" size={45} color="#000" />
+            </Pressable>
+            <ScrollView style={styles.modalScroll} >
+              <View style={styles.modalItem}>
+                <Text style={styles.modalText}>Work</Text>
+                <Text style={styles.modalText}>Work</Text>
+                <Text style={styles.modalText}>Work</Text>
+              </View>
+            </ScrollView>
         </View>
-      </Pressable>
-        </Modal>
+      </Modal>
     </View>
   )
 }
@@ -28,13 +42,16 @@ export default function CategoryModal({ show, onClose }) {
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
+    marginBottom: -20,
+    backgroundColor: '#000',
+    opacity: .5,
   },
   modalView: (windowHeight) => ({
-    flex: 1,
-    marginTop: windowHeight / 2,
-    backgroundColor: 'white',
+    flex: .7,
+    // marginTop: windowHeight / 2,
+    backgroundColor: '#fff',
     borderRadius: 20,
-    padding: 35,
+    padding: 20,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -46,7 +63,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   }),
   button: {
-    borderRadius: 20,
     padding: 10,
     elevation: 2,
   },
@@ -54,15 +70,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    // backgroundColor: '#2196F3',
   },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  modalScroll: {
+    
+  },
+  modalItem: {
+    
+    
+  },
   modalText: {
-    marginBottom: 15,
+    paddingVertical: 15,
     textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 600,
   },
 })
