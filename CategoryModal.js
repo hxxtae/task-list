@@ -1,9 +1,8 @@
-import { StyleSheet, View, Text, Pressable, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Dimensions, ScrollView, FlatList, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { Modal } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
 
-export default function CategoryModal({ show, onClose }) {
-
+export default function CategoryModal({ show, category, onClose, handleCategory }) {
   const windowHeight = Dimensions.get('window').height;
 
   const onBtnClick = (e) => {
@@ -13,6 +12,17 @@ export default function CategoryModal({ show, onClose }) {
   const onOverlayTouch = (e) => {
     onClose();
   }
+
+  const onChooseCategory = (id) => {
+    handleCategory(id);
+    onClose();
+  }
+
+  const Item = ({ id, title }) => (
+      <TouchableOpacity onPress={() => onChooseCategory(id)}>
+        <Text style={styles.modalText}>{title}</Text>
+      </TouchableOpacity>
+  );
 
   return (
     <View>
@@ -24,15 +34,15 @@ export default function CategoryModal({ show, onClose }) {
           <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={onBtnClick}>
-            <Ionicons name="close-circle-sharp" size={45} color="#000" />
-            </Pressable>
-            <ScrollView style={styles.modalScroll} >
-              <View style={styles.modalItem}>
-                <Text style={styles.modalText}>Work</Text>
-                <Text style={styles.modalText}>Work</Text>
-                <Text style={styles.modalText}>Work</Text>
+            <View style={styles.closeBtn}><Ionicons name="close-circle-sharp" size={45} color="#000" /></View>
+          </Pressable>
+          <ScrollView style={styles.modalScroll} showsVerticalScrollIndicator={false} >
+            <View style={styles.modalItemList}>
+              {Object.keys(category).length ? Object.keys(category).map((id) => (
+                <Item key={id} id={+id} title={category[id].title} />
+              )) : <View style={styles.loading}><Feather name="loader" size={24} color="black" /></View>}
               </View>
-            </ScrollView>
+          </ScrollView>
         </View>
       </Modal>
     </View>
@@ -51,7 +61,7 @@ const styles = StyleSheet.create({
     // marginTop: windowHeight / 2,
     backgroundColor: '#fff',
     borderRadius: 20,
-    padding: 20,
+    padding: 10,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -70,24 +80,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    // backgroundColor: '#2196F3',
+
   },
   textStyle: {
     color: 'white',
-    fontWeight: 'bold',
     textAlign: 'center',
   },
-  modalScroll: {
+  closeBtn: {
     
   },
-  modalItem: {
-    
+  modalScroll: {
+    flex: .8,
+		width: '100%',
+  },
+  modalItemList: {
     
   },
   modalText: {
     paddingVertical: 15,
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 600,
+    fontWeight: '500',
+  },
+  loading: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })

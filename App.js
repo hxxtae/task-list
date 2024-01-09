@@ -6,9 +6,13 @@ import Category from './Category';
 export default function App() {
   const [task, setTask] = useState(1);
 
+  const handleCategory = (id) => {
+    setTask(id);
+  }
+
   return (
     <View style={styles.container}>
-      <Category id={task} />
+      <Category id={task} handleCategory={handleCategory} />
       <StatusBar style="light" />
     </View>
   );

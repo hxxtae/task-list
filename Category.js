@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View, Pressable, Dimensions, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
@@ -13,10 +13,19 @@ const categoryObj = {
   },
   3: {
     title: 'English'
+  },
+  4: {
+    title: 'Home1'
+  },
+  5: {
+    title: 'Home2'
+  },
+  6: {
+    title: 'Home3'
   }
 }
 
-export default function Category({ id }) {
+export default function Category({ id, handleCategory }) {
   const [category, setCategory] = useState(categoryObj);
   const [categoryMenu, setCategoryMenu] = useState(false);
   const [barVal, setBarVal] = useState(0);
@@ -45,7 +54,12 @@ export default function Category({ id }) {
         </TouchableOpacity>
       </View>
       <Progress.Bar progress={barVal} color='#fff' width={null} />
-      <CategoryModal show={categoryMenu} onClose={onCloseModal} />
+
+      <CategoryModal
+        show={categoryMenu}
+        category={category}
+        onClose={onCloseModal}
+        handleCategory={handleCategory} />
     </View>
   )
 }
