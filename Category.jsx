@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Pressable, Dimensions, TouchableOpacity } from 
 import { Entypo } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
 import CategoryModal from './CategoryModal';
+import { useRecoilState } from 'recoil';
+import { themeState } from './global/atom';
 
 const categoryObj = {
   1: {
