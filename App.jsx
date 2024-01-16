@@ -1,58 +1,21 @@
-import { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Pressable, useColorScheme, TouchableOpacity, Appearance } from 'react-native';
-import { NavigationContainer, DefaultTheme, DarkTheme, useTheme } from '@react-navigation/native';
-import Category from './Category';
-import { RecoilRoot, useRecoilState } from 'recoil';
-import { themeState } from './global/atom';
+import { useColorScheme } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { RecoilRoot } from 'recoil';
 
-const LightThemes = {
-  ...DefaultTheme,
-  primary: '#597EDB',
-  secondary: '#BCBCBC',
-  background: '#FFFFFF',
-  text: '#111111',
-  card: '#E7E7E7',
-}
-
-const DarkThemes = {
-  ...DarkTheme,
-  primary: '#597EDB',
-  secondary: '#767676',
-  background: '#111111',
-  text: '#ffffff',
-  card: '#121519',
-}
+import { DarkThemes, LightThemes } from './global/theme';
+import Task from './pages/Task';
 
 export default function App() {
-  const [task, setTask] = useState(1);
   const colorScheme = useColorScheme();
-  const colors = useTheme();
-
-  const handleCategory = (id) => {
-    setTask(id);
-  }
 
   return (
     <RecoilRoot>
       <NavigationContainer theme={colorScheme === 'dark' ? DarkThemes : LightThemes}>
-        <View style={styles.container}>
-          <Category id={task} handleCategory={handleCategory} />
-          <StatusBar style="light" />
-        </View>
+        <Task />
       </NavigationContainer>
     </RecoilRoot>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  }
-});
 
 // [Design]
 // ref1: https://dribbble.com/shots/5985329-Do-More-Task-List
