@@ -17,10 +17,6 @@ export default function Task() {
   const [taskData, setTaskData] = useRecoilState(TaskData);
   const theme = useTheme();
 
-  const onChangeCategory = (id) => {
-    setCategory(id);
-  }
-
   // NOTE: Task 데이터 가져오기
   useEffect(() => {
     const initTask = async () => {
@@ -44,7 +40,7 @@ export default function Task() {
         <TaskList category={category} tasks={taskData[category]?.list} />
       </View>
       <View style={styles.section4}>
-        <TaskControl onChangeCategory={onChangeCategory} />
+        <TaskControl setCategory={setCategory} />
       </View>
       <StatusBar style="light" />
     </SafeAreaView>

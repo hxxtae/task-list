@@ -6,14 +6,20 @@ import { useRecoilValue } from 'recoil';
 
 import { TaskData } from '../../global/atom';
 import BottomSheet from '../BottomSheet';
+import CategoryList from '../CategoryList';
 
-export default function TaskControl({ onChangeCategory }) {
+export default function TaskControl({ setCategory }) {
   const [modalVisible, setModalVisible] = useState(false);
   const taskData = useRecoilValue(TaskData);
   const theme = useTheme();
 
   const showCategoryModal = () => {
     setModalVisible(true);
+  }
+
+  const bottomSheetProps = {
+    modalVisible,
+    setModalVisible
   }
 
   return (
@@ -28,12 +34,9 @@ export default function TaskControl({ onChangeCategory }) {
         <MaterialIcons name="more-horiz" size={30} color={theme.text} />
       </TouchableOpacity>
 
-      <BottomSheet
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        data={taskData}
-        setData={onChangeCategory}
-      />
+      <BottomSheet {...bottomSheetProps}>
+        <CategoryList data={taskData} setCategory={setCategory} />
+      </BottomSheet>
     </View>
   )
 }
@@ -47,7 +50,7 @@ const styles = StyleSheet.create({
     shadowColor: '#111111',
     shadowOffset: {
       width: 0,
-      height: -5,
+      height: -10,
     },
     elevation: 10,
   },
