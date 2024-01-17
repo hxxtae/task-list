@@ -1,19 +1,23 @@
+import { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useTheme } from '@react-navigation/native'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import BottomSheet from '../BottomSheet';
-import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
-export default function TaskControl() {
+import { TaskData } from '../../global/atom';
+import BottomSheet from '../BottomSheet';
+
+export default function TaskControl({ onChangeCategory }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const taskData = useRecoilValue(TaskData);
   const theme = useTheme();
 
   const showCategoryModal = () => {
     setModalVisible(true);
-  }  
+  }
 
   return (
-    <View style={styles.wrapper}>
+    <View style={styles.wrapper}>      
       <TouchableOpacity style={styles.leftIcon} hitSlop={10} onPress={showCategoryModal}>
         <Entypo name="menu" size={30} color={theme.text} />
       </TouchableOpacity>
@@ -23,9 +27,12 @@ export default function TaskControl() {
       <TouchableOpacity style={styles.rightIcon} hitSlop={10}>
         <MaterialIcons name="more-horiz" size={30} color={theme.text} />
       </TouchableOpacity>
+
       <BottomSheet
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        data={taskData}
+        setData={onChangeCategory}
       />
     </View>
   )
@@ -45,7 +52,7 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   leftIcon: {
-    marginLeft: 30
+    marginLeft: 30,
   },
   centerIcon: {
     transform: [{ translateY: -40 }],
