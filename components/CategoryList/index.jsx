@@ -1,6 +1,13 @@
+import PropTypes from 'prop-types';
 import { Entypo } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+
+CategoryList.propTypes = {
+  data: PropTypes.object,
+  setCategory: PropTypes.func.isRequired,
+  closeModal: PropTypes.func, // NOTE: cloneElement prop
+}
 
 export default function CategoryList({ data, setCategory, closeModal }) {
   const theme = useTheme();
@@ -28,6 +35,7 @@ const styles = StyleSheet.create({
   bottomSheetWrapper: {
     flex: 1,
     alignItems: 'center',
+    marginBottom: 20,
   },
   bottomSheetUl: {
     width: '100%',
@@ -35,7 +43,7 @@ const styles = StyleSheet.create({
   },
   bottomSheetLi: {
     alignItems: 'flex-start',
-    paddingVertical: 8,
+    paddingVertical: 10,
   },
   bottomSheetText: (theme) => ({
     fontSize: 20,

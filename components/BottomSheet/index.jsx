@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 import {
   View,
@@ -9,7 +10,23 @@ import {
   PanResponder,
 } from 'react-native';
 
-export function BottomSheet({ modalVisible, setModalVisible, children }) {
+// NOTE: ESLint Props
+BottomSheet.propTypes = {
+  modalVisible: PropTypes.bool.isRequired,
+  setModalVisible: PropTypes.func.isRequired,
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
+  children: PropTypes.element
+}
+
+export function BottomSheet({
+  modalVisible,
+  setModalVisible,
+  height,
+  children
+}) {
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
@@ -69,7 +86,7 @@ export function BottomSheet({ modalVisible, setModalVisible, children }) {
           <View style={styles.background}/>
         </TouchableWithoutFeedback>
         <Animated.View
-          style={{...styles.bottomSheetContainer, transform: [{ translateY: translateY }]}}
+          style={{...styles.bottomSheetContainer(height), transform: [{ translateY: translateY }]}}
           {...panResponders.panHandlers}>
           {React.cloneElement(children, { closeModal })}
         </Animated.View>
@@ -87,12 +104,13 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
   },
-  bottomSheetContainer: {
-    height: 300,
+  bottomSheetContainer: (height) => ({
+    height: height ?? 0,
     backgroundColor: "white",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-  }
+  })
 })
 
 export default BottomSheet;
+

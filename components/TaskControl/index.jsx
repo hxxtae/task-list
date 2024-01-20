@@ -7,35 +7,54 @@ import { useRecoilValue } from 'recoil';
 import { TaskData } from '../../global/atom';
 import BottomSheet from '../BottomSheet';
 import CategoryList from '../CategoryList';
+import TaskAdd from '../TaskAdd';
+import CategorySetting from '../CategorySetting';
 
 export default function TaskControl({ setCategory }) {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [categoryListVisible, setCategoryListVisible] = useState(false);
+  const [taskAddVisible, setTaskAddVisible] = useState(false);
+  const [categorySetVisible, setCategorySetVisible] = useState(false);
   const taskData = useRecoilValue(TaskData);
   const theme = useTheme();
 
-  const showCategoryModal = () => {
-    setModalVisible(true);
-  }
+  const categoryListModalProps = {
+    modalVisible: categoryListVisible,
+    setModalVisible: setCategoryListVisible,
+    height: 300
+  };
 
-  const bottomSheetProps = {
-    modalVisible,
-    setModalVisible
-  }
+  const taskAddModalProps = {
+    modalVisible: taskAddVisible,
+    setModalVisible: setTaskAddVisible,
+    height: '88%'
+  };
+
+  const categorySettingModalProps = {
+    modalVisible: categorySetVisible,
+    setModalVisible: setCategorySetVisible,
+    height: 250
+  };
 
   return (
     <View style={styles.wrapper}>      
-      <TouchableOpacity style={styles.leftIcon} hitSlop={10} onPress={showCategoryModal}>
+      <TouchableOpacity style={styles.leftIcon} hitSlop={10} onPress={() => setCategoryListVisible(true)}>
         <Entypo name="menu" size={30} color={theme.text} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.centerIcon}>
+      <TouchableOpacity style={styles.centerIcon} hitSlop={10} onPress={() => setTaskAddVisible(true)}>
         <Ionicons name="add-circle-sharp" size={70} color={theme.text} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.rightIcon} hitSlop={10}>
+      <TouchableOpacity style={styles.rightIcon} hitSlop={10} onPress={() => setCategorySetVisible(true)}>
         <MaterialIcons name="more-horiz" size={30} color={theme.text} />
       </TouchableOpacity>
 
-      <BottomSheet {...bottomSheetProps}>
+      <BottomSheet {...categoryListModalProps}>
         <CategoryList data={taskData} setCategory={setCategory} />
+      </BottomSheet>
+      <BottomSheet {...taskAddModalProps}>
+        <TaskAdd />
+      </BottomSheet>
+      <BottomSheet {...categorySettingModalProps}>
+        <CategorySetting />
       </BottomSheet>
     </View>
   )
