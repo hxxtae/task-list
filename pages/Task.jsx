@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Pressable, useColorScheme, TouchableOpacity, Appearance, SafeAreaView } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useTheme } from '@react-navigation/native';
 import { useRecoilState } from 'recoil';
 
-import Category from '../Category';
 import { TaskData } from '../global/atom';
 import { getStorage, initSetStorage } from '../apis/model';
 import TaskTitle from '../components/TaskTitle';
@@ -13,7 +12,7 @@ import TaskList from '../components/TaskList';
 import TaskControl from '../components/TaskControl';
 
 export default function Task() {
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState('');
   const [taskData, setTaskData] = useRecoilState(TaskData);
   const theme = useTheme();
 
@@ -37,7 +36,7 @@ export default function Task() {
         <TaskBar />
       </View>
       <View style={styles.section3}>
-        <TaskList category={category} tasks={taskData[category]?.list} />
+        <TaskList tasks={taskData[category]?.list} />
       </View>
       <View style={styles.section4}>
         <TaskControl setCategory={setCategory} />

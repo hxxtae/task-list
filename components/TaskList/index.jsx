@@ -1,7 +1,12 @@
 import { useTheme } from '@react-navigation/native';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
 
-export default function TaskList({ category, tasks }) {
+TaskList.propTypes = {
+  tasks: PropTypes.object,
+}
+
+export default function TaskList({ tasks }) {
   const theme = useTheme();
 
   const emptyList = () => {

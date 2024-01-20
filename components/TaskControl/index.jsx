@@ -3,12 +3,17 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useTheme } from '@react-navigation/native'
 import { useRecoilValue } from 'recoil';
+import PropTypes from 'prop-types';
 
 import { TaskData } from '../../global/atom';
 import BottomSheet from '../BottomSheet';
 import CategoryList from '../CategoryList';
 import TaskAdd from '../TaskAdd';
 import CategorySetting from '../CategorySetting';
+
+TaskControl.propTypes = {
+  setCategory: PropTypes.func.isRequired
+}
 
 export default function TaskControl({ setCategory }) {
   const [categoryListVisible, setCategoryListVisible] = useState(false);
