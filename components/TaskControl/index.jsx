@@ -12,10 +12,11 @@ import TaskAdd from '../TaskAdd';
 import CategorySetting from '../CategorySetting';
 
 TaskControl.propTypes = {
+  category: PropTypes.string.isRequired,
   setCategory: PropTypes.func.isRequired
 }
 
-export default function TaskControl({ setCategory }) {
+export default function TaskControl({ category, setCategory }) {
   const [categoryListVisible, setCategoryListVisible] = useState(false);
   const [taskAddVisible, setTaskAddVisible] = useState(false);
   const [categorySetVisible, setCategorySetVisible] = useState(false);
@@ -56,7 +57,7 @@ export default function TaskControl({ setCategory }) {
         <CategoryList data={taskData} setCategory={setCategory} />
       </BottomSheet>
       <BottomSheet {...taskAddModalProps}>
-        <TaskAdd />
+        <TaskAdd category={category} />
       </BottomSheet>
       <BottomSheet {...categorySettingModalProps}>
         <CategorySetting />

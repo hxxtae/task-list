@@ -39,7 +39,7 @@ export default function Task() {
         <TaskList tasks={taskData[category]?.list} />
       </View>
       <View style={styles.section4}>
-        <TaskControl setCategory={setCategory} />
+        <TaskControl category={category} setCategory={setCategory} />
       </View>
       <StatusBar style="light" />
     </SafeAreaView>
