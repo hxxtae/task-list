@@ -18,12 +18,12 @@ export default function CategoryList({ data, setCategory, closeModal }) {
   }
 
   return (
-    <View style={styles.bottomSheetWrapper}>
+    <View style={styles.wrapper}>
       <Entypo name="chevron-small-down" size={30} color={theme.text} />
-      <ScrollView style={styles.bottomSheetUl}>
+      <ScrollView style={styles.categoryList}>
         {Object.keys(data).slice(0).map(id => (
-          <Pressable key={id} style={styles.bottomSheetLi} onPress={() => onClickCategory(id)}>
-            <Text style={styles.bottomSheetText(theme)}>{data[id].title}</Text>
+          <Pressable key={id} style={styles.categoryItem} onPress={() => onClickCategory(id)}>
+            <Text style={styles.categoryText(theme)}>{data[id].title}</Text>
           </Pressable>
         ))}
       </ScrollView>
@@ -32,20 +32,20 @@ export default function CategoryList({ data, setCategory, closeModal }) {
 }
 
 const styles = StyleSheet.create({
-  bottomSheetWrapper: {
+  wrapper: {
     flex: 1,
     alignItems: 'center',
     marginBottom: 20,
   },
-  bottomSheetUl: {
+  categoryList: {
     width: '100%',
     paddingHorizontal: 24,
   },
-  bottomSheetLi: {
+  categoryItem: {
     alignItems: 'flex-start',
     paddingVertical: 10,
   },
-  bottomSheetText: (theme) => ({
+  categoryText: (theme) => ({
     fontSize: 20,
     fontWeight: '500',
     color: `${theme.text}`,
