@@ -20,7 +20,7 @@ export default function CategoryList({ data, setCategory, closeModal }) {
   return (
     <View style={styles.wrapper}>
       <Entypo name="chevron-small-down" size={30} color={theme.text} />
-      <ScrollView style={styles.categoryList}>
+      <ScrollView style={styles.categoryList} showsVerticalScrollIndicator={false}>
         {Object.keys(data).slice(0).map(id => (
           <Pressable key={id} style={styles.categoryItem} onPress={() => onClickCategory(id)}>
             <Text style={styles.categoryText(theme)}>{data[id].title}</Text>

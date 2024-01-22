@@ -1,33 +1,64 @@
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { useRecoilValue } from 'recoil';
 import PropTypes from 'prop-types';
 
+import { TaskData, TaskMutateState } from '../../global/atom';
 import useMutateTask from '../../hooks/useMutateTask';
 
 TaskAdd.propTypes = {
-  category: PropTypes.string.isRequired,
+  categoryId: PropTypes.string.isRequired,
   closeModal: PropTypes.func, // NOTE: cloneElement prop from Parent element
 }
 
-export default function TaskAdd({ category, closeModal }) {
-  const [taskName, setTaskName] = useState('');
-  const [priority, setPriority] = useState('');
+export default function TaskAdd({ categoryId, closeModal }) {
+  const taskData = useRecoilValue(TaskData);
+  const taskMutateState = useRecoilValue(TaskMutateState);
   const theme = useTheme();
-  const { onTaskOfCreate } = useMutateTask();
+
+  const taskId = taskMutateState.task.id || '';
+  const initTaskName = taskId ? taskData[categoryId]?.list[taskId].name : '';
+  const [taskName, setTaskName] = useState(initTaskName);
+  const [priority, setPriority] = useState('');
+  const { onTaskOfCreate, onTaskOfUpdate } = useMutateTask();
 
   const handleAddTask = () => {
-    closeModal();
     if (taskName === '') return;
 
-    const addTask = {
+    const newTask = {
       name: taskName,
       date: Date.now().toString(),
       check: false
     }
-    onTaskOfCreate(category, addTask);
-    setTaskName('');
+    onTaskOfCreate(categoryId, newTask);
+    closeModal();
+  }
+
+  const handleUpdateTask = () => {
+    if (taskName === '') return;
+    
+    const { id } = taskMutateState.task;
+    const updateTask = {
+      name: taskName,
+      date: Date.now().toString(),
+      check: false
+    }
+    onTaskOfUpdate(categoryId, id, updateTask);
+    closeModal();
+  }
+
+  const handleTaskSubmit = () => {
+    const { setting, division } = taskMutateState.task;
+    if (setting && division === 'create') {
+      handleAddTask();
+      return;
+    }
+    if (setting && division === 'update') {
+      handleUpdateTask();
+      return;
+    }
   }
 
   return (
@@ -61,7 +92,7 @@ export default function TaskAdd({ category, closeModal }) {
         <TouchableOpacity style={[styles.button, styles.firstChild(theme)]} onPress={() => closeModal()}>
           <Text style={styles.buttonText(theme)}>Cancel</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleAddTask}>
+        <TouchableOpacity style={styles.button} onPress={() => handleTaskSubmit()}>
           <Text style={styles.buttonText(theme)}>Done</Text>
         </TouchableOpacity>
       </View>
