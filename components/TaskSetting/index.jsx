@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import PropTypes from 'prop-types';
 
@@ -17,10 +17,7 @@ export default function TaskSetting({ categoryId, closeModal }) {
   const taskData = useRecoilValue(TaskData);
   const taskMutateState = useRecoilValue(TaskMutateState);
   const theme = useTheme();
-
-  const taskId = taskMutateState.task.id || '';
-  const initTaskName = taskId ? taskData[categoryId]?.list[taskId].name : '';
-  const [taskName, setTaskName] = useState(initTaskName);
+  const [taskName, setTaskName] = useState('');
   const [priority, setPriority] = useState('');
   const { onTaskOfCreate, onTaskOfUpdate } = useMutateTask();
 
@@ -60,6 +57,15 @@ export default function TaskSetting({ categoryId, closeModal }) {
       return;
     }
   }
+
+  // Side Effect: Initialize Of Input
+  useLayoutEffect(() => {
+    const { id } = taskMutateState.task;
+    if (!id) return;
+
+    const { name } = taskData[categoryId].list[id];
+    setTaskName(name || '');
+  }, [taskMutateState]);
 
   return (
     <View style={styles.wrapper(theme)}>
