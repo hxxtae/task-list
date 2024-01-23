@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { TaskData, TaskMutateState } from '../../global/atom';
 import BottomSheet from '../BottomSheet';
 import CategoryList from '../CategoryList';
-import TaskAdd from '../TaskAdd';
+import TaskSetting from '../TaskSetting';
 import CategorySetting from '../CategorySetting';
 
 TaskControl.propTypes = {
@@ -69,7 +69,7 @@ export default function TaskControl({ categoryId, setCategory }) {
         <CategoryList data={taskData} setCategory={setCategory} />
       </BottomSheet>
       <BottomSheet {...taskAddModalProps}>
-        <TaskAdd categoryId={categoryId} />
+        <TaskSetting categoryId={categoryId} />
       </BottomSheet>
       <BottomSheet {...categorySettingModalProps}>
         <CategorySetting />

@@ -8,12 +8,12 @@ import PropTypes from 'prop-types';
 import { TaskData, TaskMutateState } from '../../global/atom';
 import useMutateTask from '../../hooks/useMutateTask';
 
-TaskAdd.propTypes = {
+TaskSetting.propTypes = {
   categoryId: PropTypes.string.isRequired,
   closeModal: PropTypes.func, // NOTE: cloneElement prop from Parent element
 }
 
-export default function TaskAdd({ categoryId, closeModal }) {
+export default function TaskSetting({ categoryId, closeModal }) {
   const taskData = useRecoilValue(TaskData);
   const taskMutateState = useRecoilValue(TaskMutateState);
   const theme = useTheme();
@@ -71,7 +71,7 @@ export default function TaskAdd({ categoryId, closeModal }) {
             style={styles.inputText(theme)}
             value={taskName}
             onChangeText={setTaskName}
-            placeholder="Tap to add"
+            placeholder="Task to add.."
             returnKeyType='done'
             autoCapitalize='words'
           />
@@ -82,7 +82,7 @@ export default function TaskAdd({ categoryId, closeModal }) {
             style={styles.inputText(theme)}
             value={priority}
             onChangeText={setPriority}
-            placeholder="Tap to add"
+            placeholder="Task to add.."
             returnKeyType='done'
             autoCapitalize='words'
           />
