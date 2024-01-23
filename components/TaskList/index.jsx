@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { useSetRecoilState } from 'recoil';
@@ -41,7 +41,20 @@ export default function TaskList({ categoryId, tasks }) {
   }
 
   const handleTaskDeletePress = (categoryId, id) => {
-    onTaskOfDelete(categoryId, id);
+    Alert.alert('Alert Title', 'My Alert Msg', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Done',
+        onPress: () => {
+          onTaskOfDelete(categoryId, id);
+        },
+      },
+    ],{
+      cancelable: true,
+    });
     setItemSetting(-1);
   }
 
