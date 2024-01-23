@@ -1,5 +1,10 @@
 import { useTheme } from '@react-navigation/native';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
+
+TaskTitle.propTypes = {
+  title: PropTypes.string
+}
 
 export default function TaskTitle({ title }) {
   const theme = useTheme();
@@ -8,9 +13,10 @@ export default function TaskTitle({ title }) {
     <View style={styles.wrapper}>
       <Pressable
         style={({ pressed }) => styles.header(pressed)}
-        hitSlop={20}
-      >
-        <Text style={styles.headerFont(theme)}>{title}</Text>
+        hitSlop={20}>
+        {title ?
+          <Text style={styles.headerFont(theme)}>{title}</Text> :
+          <Text style={styles.headerFont(theme)}>Loading...</Text>}
       </Pressable>
     </View>
   )
