@@ -7,15 +7,18 @@ import { produce } from 'immer';
 import PropTypes from 'prop-types';
 
 import { TaskMutateState } from '../../global/atom';
+import useMutateTask from '../../hooks/useMutateTask';
 
 TaskList.propTypes = {
+  categoryId: PropTypes.string.isRequired,
   tasks: PropTypes.object,
 }
 
-export default function TaskList({ tasks }) {
+export default function TaskList({ categoryId, tasks }) {
+  const theme = useTheme();
   const [itemSetting, setItemSetting] = useState(-1);
   const setTaskMutateState = useSetRecoilState(TaskMutateState);
-  const theme = useTheme();
+  const { onTaskOfDelete } = useMutateTask();
 
   const handleSettingPress = (target) => {
     if (target === itemSetting) {
@@ -37,8 +40,8 @@ export default function TaskList({ tasks }) {
     setItemSetting(-1);
   }
 
-  const handleTaskDeletePress = () => {
-    console.log('delete');
+  const handleTaskDeletePress = (categoryId, id) => {
+    onTaskOfDelete(categoryId, id);
     setItemSetting(-1);
   }
 
@@ -56,7 +59,7 @@ export default function TaskList({ tasks }) {
         <TouchableOpacity style={styles.itemSettingButton} onPress={() => handleTaskUpdatePress({state: true, id: taskId})}>
           <Text style={[styles.text(theme), styles.itemSettingText]}>UPDATE</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemSettingButton} onPress={() => handleTaskDeletePress()}>
+        <TouchableOpacity style={styles.itemSettingButton} onPress={() => handleTaskDeletePress(categoryId, taskId)}>
           <Text style={[styles.text(theme), styles.itemSettingText, styles.warning]}>DELETE</Text>
         </TouchableOpacity>
       </View>

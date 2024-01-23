@@ -36,7 +36,7 @@ export default function Task() {
         <TaskBar />
       </View>
       <View style={styles.section3}>
-        <TaskList tasks={taskData[category]?.list} />
+        <TaskList categoryId={category} tasks={taskData[category]?.list} />
       </View>
       <View style={styles.section4}>
         <TaskControl categoryId={category} setCategory={setCategory} />

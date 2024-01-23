@@ -1,9 +1,9 @@
 import { useRecoilState } from 'recoil';
+import { useCallback } from 'react';
 import { produce } from 'immer';
 
 import { TaskData } from '../global/atom';
 import { setStorage } from '../apis/model';
-import { useCallback } from 'react';
 
 const useMutateTask = () => {
   const [taskData, setTaskData] = useRecoilState(TaskData);
@@ -46,7 +46,27 @@ const useMutateTask = () => {
     await setStorage(updateTask(taskData));
   }, [taskData]);
 
-  return { onTaskOfCreate, onTaskOfUpdate };
+  /**
+   * Mutate 3. Delete of Task
+   * @param {string} categoryId 
+   * @param {string} taskId 
+   */
+  const onTaskOfDelete = useCallback(async (categoryId, taskId) => {
+    const deleteTask = (prev) =>
+      produce(prev, (draft) => {
+        delete draft[categoryId].list[taskId];
+        return draft;
+      });
+    
+    setTaskData(deleteTask);
+    await setStorage(deleteTask(taskData));
+  }, [taskData]);
+
+  return {
+    onTaskOfCreate,
+    onTaskOfUpdate,
+    onTaskOfDelete,
+  };
 }
 
 export default useMutateTask;
