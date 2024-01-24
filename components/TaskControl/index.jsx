@@ -18,17 +18,17 @@ TaskControl.propTypes = {
 }
 
 export default function TaskControl({ categoryId, setCategory }) {
+  const [categorySelect, setCategorySelect] = useState({ setting: false });
   const [taskMutateState, setTaskMutateState] = useRecoilState(TaskMutateState);
-  const [setting, setSetting] = useState(false);
   const taskData = useRecoilValue(TaskData);
   const theme = useTheme();
 
   // NOTE: 카테고리 목록 Modal On/Off
   const categoryListModalProps = {
-    modalVisible: taskMutateState.category.select,
+    modalVisible: categorySelect.setting,
     setModalVisible: ({state}) =>
-      setTaskMutateState((prev) =>
-        produce(prev, (draft) => ((draft.category.select = state), draft))),
+      setCategorySelect((prev) =>
+        produce(prev, (draft) => ((draft.setting = state), draft))),
     height: 300
   };
 
@@ -48,8 +48,15 @@ export default function TaskControl({ categoryId, setCategory }) {
 
   // NOTE: 설정 Modal On/Off
   const categorySettingModalProps = {
-    modalVisible: setting,
-    setModalVisible: setSetting,
+    modalVisible: taskMutateState.category.setting,
+    setModalVisible: ({ state, id }) =>
+      setTaskMutateState((prev) =>
+        produce(prev, (draft) => {
+          draft.category.setting = state;
+          draft.category.division = '';
+          draft.category.id = id;
+          return draft;
+        })),
     height: 250
   };
 
@@ -61,7 +68,7 @@ export default function TaskControl({ categoryId, setCategory }) {
       <TouchableOpacity style={styles.centerIcon} hitSlop={10} onPress={() => taskAddModalProps.setModalVisible({state: true})}>
         <Ionicons name="add-circle-sharp" size={70} color={theme.text} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.rightIcon} hitSlop={10} onPress={() => categorySettingModalProps.setModalVisible(true)}>
+      <TouchableOpacity style={styles.rightIcon} hitSlop={10} onPress={() => categorySettingModalProps.setModalVisible({state: true})}>
         <MaterialIcons name="more-horiz" size={30} color={theme.text} />
       </TouchableOpacity>
 

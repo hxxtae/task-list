@@ -10,10 +10,8 @@ export const TaskMutateState = atom({
   default: {
     category: {
       id: '',
-      select: false,
-      create: false,
-      update: false,
-      delete: false,
+      setting: false,
+      division: '',
     },
     task: {
       id: '',
