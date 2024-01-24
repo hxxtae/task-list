@@ -1,10 +1,10 @@
 import { useTheme } from '@react-navigation/native';
-import { useState } from 'react';
+import { useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 
 export default function TaskBar() {
-  const [val, setVal] = useState(.5);
+  const val = useRef(0.5).current;
   const theme = useTheme();
 
   return (
