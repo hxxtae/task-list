@@ -41,20 +41,25 @@ export default function TaskList({ categoryId, tasks }) {
   }
 
   const handleTaskDeletePress = (categoryId, id) => {
-    Alert.alert('Alert Title', 'My Alert Msg', [
-      {
+    Alert.alert(
+      'Delete Task?', // Title
+      `Delete task name is \n"${tasks[id]?.name}"`, // Message
+      // Buttons[]
+      [{
         text: 'Cancel',
         style: 'cancel',
-      },
-      {
-        text: 'Done',
+      }, {
+        text: 'Delete',
         onPress: () => {
           onTaskOfDelete(categoryId, id);
-        },
-      },
-    ],{
-      cancelable: true,
-    });
+          Alert.alert("Deletion complete", `"${tasks[id]?.name}"`);
+        }
+      }],
+      // Options
+      {
+        cancelable: true,
+      }
+    );
     setItemSetting(-1);
   }
 
