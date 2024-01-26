@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     alignItems: 'center',
     backgroundColor: `${theme.colors.background}`,
+    paddingTop: 20,
   }),
   inputWrapper: {
     flex: 1,

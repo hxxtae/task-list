@@ -77,8 +77,8 @@ export default function CategorySetting({ closeModal }) {
           <Text style={[styles.text(theme), styles.buttonText]}>Edit category name</Text>
         </Pressable>
         <Pressable style={styles.button} onPress={onRemoveMenu}>
-          <Feather name="trash-2" size={18} color={theme.colors.text} />
-          <Text style={[styles.text(theme), styles.buttonText]}>Remove category name</Text>
+          <Feather name="trash-2" size={18} color={theme.colors.danger} />
+          <Text style={[styles.text(theme), styles.buttonText, styles.danger(theme)]}>Remove category</Text>
         </Pressable>
       </View>
     </View>
@@ -108,5 +108,8 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: '500',
     fontSize: 18,
-  }
+  },
+  danger: (theme) => ({
+    color: `${theme.colors.danger}`
+  })
 });

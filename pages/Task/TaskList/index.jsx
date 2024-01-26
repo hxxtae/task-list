@@ -76,7 +76,7 @@ export default function TaskList({ categoryId, tasks = {} }) {
           <Text style={[styles.text(theme), styles.itemSettingText]}>UPDATE</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemSettingButton} onPress={() => handleTaskDeletePress(categoryId, taskId)}>
-          <Text style={[styles.text(theme), styles.itemSettingText, styles.warning]}>DELETE</Text>
+          <Text style={[styles.text(theme), styles.itemSettingText, styles.danger(theme)]}>DELETE</Text>
         </TouchableOpacity>
       </View>
     )
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   itemSettingText: {
     fontWeight: '500',
   },
-  warning: {
-    color: 'red'
-  }
+  danger: (theme) => ({
+    color: `${theme.colors.danger}`
+  })
 });

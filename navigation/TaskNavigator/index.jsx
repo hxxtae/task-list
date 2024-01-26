@@ -13,6 +13,8 @@ export default function TaskNavigator() {
       backgroundColor: `${theme.colors.text}`
     },
     headerTintColor: `${theme.colors.background}`,
+    statusBarColor: `${theme.colors.text}`,
+    statusBarStyle: `${theme.dark ? 'dark' : 'light' }`
   }
 
   return (
@@ -23,7 +25,7 @@ export default function TaskNavigator() {
         options={{
           headerShown: false,
           statusBarColor: `${theme.colors.background}`,
-          statusBarStyle: 'dark'
+          statusBarStyle: `${theme.dark ? 'light' : 'dark' }`
         }} />
       <Stack.Screen name='TaskEdit' options={{...headerOptions}}>
         {() => <TaskForm workKind='edit' />}
