@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@react-navigation/native';
 import { Entypo, Feather } from '@expo/vector-icons';
 
-import TaskForm from '../../pages/TaskForm';
 import TaskNavigator from '../TaskNavigator';
+import TaskAddNavigator from '../TaskAddNavigator';
 
 export default function TabNavigator() {
   const Tab = createBottomTabNavigator();
@@ -29,20 +29,15 @@ export default function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name='TaskAdd'
+        name='TaskAddNavigator'
+        component={TaskAddNavigator}
         options={{
-          headerTitleAlign: 'center',
-          headerStyle: {
-            backgroundColor: `${theme.colors.text}`
-          },
-          headerTintColor: `${theme.colors.background}`,
           tabBarShowLabel: false,
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Feather name="plus-square" size={24} color={focused ? theme.colors.text : theme.colors.secondary} />
           ),
-        }}>
-          {() => <TaskForm workKind='add' />}
-        </Tab.Screen>
+        }} />
     </Tab.Navigator>
   )
 }
