@@ -70,7 +70,7 @@ export function BottomSheet({
 
   const closeModal = () => {
     closeBottomSheet.start(() => {
-      setModalVisible({state: false, id: ''});
+      setModalVisible(false);
     });
   };
 

@@ -5,18 +5,12 @@ export const TaskData = atom({
   default: {},
 });
 
-export const TaskMutateState = atom({
-  key: "GlobalTaskMutateState",
-  default: {
-    category: {
-      id: '',
-      setting: false,
-      division: '',
-    },
-    task: {
-      id: '',
-      setting: false,
-      division: '',
-    }
-  }
+export const CategoryIdState = atom({
+  key: "GlobalCategoryId",
+  default: ''
+});
+
+export const TaskIdState = atom({
+  key: "GlobalTaskId",
+  default: ''
 });

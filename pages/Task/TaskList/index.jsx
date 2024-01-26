@@ -1,26 +1,27 @@
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import { useSetRecoilState } from 'recoil';
 import { useState } from 'react';
-import { produce } from 'immer';
 import PropTypes from 'prop-types';
 
-import { TaskMutateState } from '../../global/atom';
-import useMutateTask from '../../hooks/useMutateTask';
+import useMutateTask from '../../../hooks/useMutateTask';
+import { useSetRecoilState } from 'recoil';
+import { TaskIdState } from '../../../global/atom';
 
 TaskList.propTypes = {
   categoryId: PropTypes.string.isRequired,
   tasks: PropTypes.object,
 }
 
-export default function TaskList({ categoryId, tasks }) {
+export default function TaskList({ categoryId, tasks = {} }) {
   const theme = useTheme();
   const [itemSetting, setItemSetting] = useState(-1);
-  const setTaskMutateState = useSetRecoilState(TaskMutateState);
+  const setTaskId = useSetRecoilState(TaskIdState);
   const { onTaskOfDelete } = useMutateTask();
+  const navigation = useNavigation();
 
-  const handleSettingPress = (target) => {
+  // NOTE: Task 목록 설정 클릭
+  const handleTaskSettingPress = (target) => {
     if (target === itemSetting) {
       setItemSetting(-1);
       return;
@@ -28,19 +29,16 @@ export default function TaskList({ categoryId, tasks }) {
     setItemSetting(target);
   }
 
-  const handleTaskUpdatePress = ({state, id}) => {
-    setTaskMutateState((prev) =>
-      produce(prev, (draft) => {
-        draft.task.setting = state;
-        draft.task.division = 'update';
-        draft.task.id = id;
-        return draft;
-      })
-    );
+  // NOTE: Task 목록 설정 -> Update 클릭
+  const handleTaskUpdatePress = (taskId) => {
+    navigation.navigate('TaskEdit');
+    setTaskId(taskId);
     setItemSetting(-1);
   }
 
+  // NOTE: Task 목록 설정 -> Delete 클릭
   const handleTaskDeletePress = (categoryId, id) => {
+    if (categoryId === '' || id === '') return;
     Alert.alert(
       'Delete Task?', // Title
       `Delete task name is \n"${tasks[id]?.name}"`, // Message
@@ -74,7 +72,7 @@ export default function TaskList({ categoryId, tasks }) {
   const onTaskSetting = (taskId) => {
     return (
       <View style={styles.itemSetting(theme)}>
-        <TouchableOpacity style={styles.itemSettingButton} onPress={() => handleTaskUpdatePress({state: true, id: taskId})}>
+        <TouchableOpacity style={styles.itemSettingButton} onPress={() => handleTaskUpdatePress(taskId)}>
           <Text style={[styles.text(theme), styles.itemSettingText]}>UPDATE</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemSettingButton} onPress={() => handleTaskDeletePress(categoryId, taskId)}>
@@ -86,12 +84,12 @@ export default function TaskList({ categoryId, tasks }) {
 
   return (
     <>
-      {(tasks !== undefined) ? 
+      {(Object.keys(tasks)?.length ) ? 
         <ScrollView style={styles.wrapper} showsVerticalScrollIndicator={false}>
           {Object.keys(tasks).map((taskKey, idx) => (
             <View key={taskKey} style={styles.item(theme)}>
               <Text style={[styles.itemText, styles.text(theme)]}>{tasks[taskKey].name}</Text>
-              <Pressable onPress={() => handleSettingPress(idx)}>
+              <Pressable onPress={() => handleTaskSettingPress(idx)}>
                 <Feather name="more-vertical" size={24} color="black" />
               </Pressable>
               {(itemSetting === idx) && onTaskSetting(taskKey)}
@@ -119,10 +117,10 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     borderRadius: 7,
     marginBottom: 10,
-    backgroundColor: `${theme.card}`,
+    backgroundColor: `${theme.colors.card}`,
   }),
   text: (theme) => ({
-    color: `${theme.text}`,
+    color: `${theme.colors.text}`,
   }),
   itemText: {
     fontSize: 16,
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
   emptyText: (theme) => ({
     fontSize: 16,
     fontWeight: '600',
-    color: `${theme.secondary}`,
+    color: `${theme.colors.secondary}`,
   }),
 
   itemSetting: (theme) => ({
@@ -145,7 +143,7 @@ const styles = StyleSheet.create({
     gap: 15,
     right: 45,
     borderRadius: 7,
-    backgroundColor: `${theme.background}`,
+    backgroundColor: `${theme.colors.background}`,
     paddingHorizontal: 20,
     paddingVertical: 8,
     shadowColor: "#000",

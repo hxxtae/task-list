@@ -1,18 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
-import { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useEffect } from 'react';
 import { useTheme } from '@react-navigation/native';
 import { useRecoilState } from 'recoil';
 
-import { TaskData } from '../global/atom';
-import { getStorage, initSetStorage } from '../apis/model';
-import TaskTitle from '../components/TaskTitle';
-import TaskBar from '../components/TaskBar';
-import TaskList from '../components/TaskList';
-import TaskControl from '../components/TaskControl';
+import { CategoryIdState, TaskData } from '../../global/atom';
+import { getStorage, initSetStorage } from '../../apis/model';
+import TaskTitle from './TaskTitle';
+import TaskBar from './TaskBar';
+import TaskList from './TaskList';
 
 export default function Task() {
-  const [category, setCategory] = useState('');
+  const [categoryId, setCategoryId] = useRecoilState(CategoryIdState)
   const [taskData, setTaskData] = useRecoilState(TaskData);
   const theme = useTheme();
 
@@ -22,7 +21,7 @@ export default function Task() {
       await initSetStorage();
       const data = await getStorage();
       setTaskData(data);
-      setCategory(Object.keys(data)[0] ?? 'C-000000');
+      setCategoryId(Object.keys(data)[0] ?? 'C-000000');
     }
     initTask();
   }, []);
@@ -30,18 +29,14 @@ export default function Task() {
   return (
     <SafeAreaView style={styles.container(theme)}>
       <View style={styles.section1}>
-        <TaskTitle title={taskData[category]?.title} />
+        <TaskTitle />
       </View>
       <View style={styles.section2}>
         <TaskBar />
       </View>
       <View style={styles.section3}>
-        <TaskList categoryId={category} tasks={taskData[category]?.list} />
+        <TaskList categoryId={categoryId} tasks={taskData[categoryId]?.list} />
       </View>
-      <View style={styles.section4}>
-        <TaskControl categoryId={category} setCategory={setCategory} />
-      </View>
-      <StatusBar style="light" />
     </SafeAreaView>
   )
 }
@@ -49,11 +44,10 @@ export default function Task() {
 const styles = StyleSheet.create({
   container: (theme) => ({
     flex: 1,
-    backgroundColor: `${theme.background}`,
+    backgroundColor: `${theme.colors.background}`,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     paddingHorizontal: 20,
-    marginTop: 70,
   }),
   section1: {
     flex: 1,
@@ -66,13 +60,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red'
   },
   section3: {
-    flex: 7,
+    flex: 8,
     width: '100%',
     // backgroundColor: 'orange'
   },
-  section4: {
-    flex: 1.5,
-    width: '100%',
-    // backgroundColor: 'black'
-  }
 });

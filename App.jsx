@@ -1,18 +1,13 @@
-import { useColorScheme } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { RecoilRoot } from 'recoil';
 
-import { DarkThemes, LightThemes } from './global/theme';
-import Task from './pages/Task';
+import MainNavigator from './navigation/MainNavigator';
+// import Task from './pages/Task';
 
 export default function App() {
-  const colorScheme = useColorScheme();
 
   return (
     <RecoilRoot>
-      <NavigationContainer theme={colorScheme === 'dark' ? DarkThemes : LightThemes}>
-        <Task />
-      </NavigationContainer>
+      <MainNavigator />
     </RecoilRoot>
   );
 }

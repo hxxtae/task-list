@@ -9,7 +9,7 @@ export default function TaskBar() {
 
   return (
     <View style={styles.wrapper}>
-      <Progress.Bar style={styles.bar} progress={val} color={theme.text} width={null} />
+      <Progress.Bar style={styles.bar} progress={val} color={theme.colors.text} width={null} />
       <Text style={styles.barText(theme)}>{ `${val * 100}%` }</Text>
     </View>
   )
@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginLeft: 20,
-    color: `${theme.text}`,
+    color: `${theme.colors.text}`,
   })
 });
