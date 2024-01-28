@@ -11,9 +11,18 @@ import TaskBar from './TaskBar';
 import TaskList from './TaskList';
 
 export default function Task() {
-  const [categoryId, setCategoryId] = useRecoilState(CategoryIdState)
-  const [taskData, setTaskData] = useRecoilState(TaskData);
   const theme = useTheme();
+  const [categoryId, setCategoryId] = useRecoilState(CategoryIdState);
+  const [taskData, setTaskData] = useRecoilState(TaskData);
+
+  const getCheckedCount = () => {
+    const taskIds = Object.keys(taskData[categoryId]?.list ?? {});
+    const totalLen = taskIds.length;
+    if (!totalLen) return 0;
+
+    const tasks = taskData[categoryId].list;
+    return taskIds.filter((id) => tasks[id].check === true).length / totalLen;
+  }
 
   // NOTE: Task 데이터 가져오기
   useEffect(() => {
@@ -32,7 +41,7 @@ export default function Task() {
         <TaskTitle />
       </View>
       <View style={styles.section2}>
-        <TaskBar />
+        <TaskBar barState={getCheckedCount()} />
       </View>
       <View style={styles.section3}>
         <TaskList categoryId={categoryId} tasks={taskData[categoryId]?.list} />

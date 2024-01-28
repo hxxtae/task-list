@@ -1,3 +1,4 @@
+import { useTheme } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 import {
@@ -27,25 +28,29 @@ export function BottomSheet({
   height,
   children
 }) {
+  const theme = useTheme();
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
     inputRange: [-1, 0, 1],
     outputRange: [0, 0, 1],
   });
-
+  
+  // NOTE: Animate Value -> toValue (1)
   const resetBottomSheet = Animated.timing(panY, {
     toValue: 0,
     duration: 300,
     useNativeDriver: true,
   });
 
+  // NOTE: Animate Value -> toValue (2)
   const closeBottomSheet = Animated.timing(panY, {
     toValue: screenHeight,
-    duration: 150,
+    duration: 300,
     useNativeDriver: true,
   });
-
+  
+  // NOTE: Touch Value
   const panResponders = useRef(PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onMoveShouldSetPanResponder: () => false,
@@ -86,7 +91,7 @@ export function BottomSheet({
           <View style={styles.background}/>
         </TouchableWithoutFeedback>
         <Animated.View
-          style={{...styles.bottomSheetContainer(height), transform: [{ translateY: translateY }]}}
+          style={{...styles.bottomSheetContainer(height, theme), transform: [{ translateY: translateY }]}}
           {...panResponders.panHandlers}>
           {React.cloneElement(children, { closeModal })}
         </Animated.View>
@@ -104,9 +109,9 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
   },
-  bottomSheetContainer: (height) => ({
+  bottomSheetContainer: (height, theme) => ({
     height: height ?? 0,
-    backgroundColor: "white",
+    backgroundColor: `${theme.colors.background}`,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   })

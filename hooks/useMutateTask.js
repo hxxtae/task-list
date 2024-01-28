@@ -62,10 +62,22 @@ const useMutateTask = () => {
     await setStorage(deleteTask(taskData));
   }, [taskData]);
 
+  const onTaskOfChecked = async (categoryId, taskId, check) => {
+    const checkTask = (prev) =>
+      produce(prev, (draft) => {
+        draft[categoryId].list[taskId].check = check;
+        return draft;
+      });
+
+    setTaskData(checkTask);
+    await setStorage(checkTask(taskData));
+  }
+
   return {
     onTaskOfCreate,
     onTaskOfUpdate,
     onTaskOfDelete,
+    onTaskOfChecked,
   };
 }
 

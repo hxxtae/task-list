@@ -61,6 +61,7 @@ export default function CategoryForm({ workKind }) {
             placeholder="write category name..."
             returnKeyType='done'
             autoCapitalize='words'
+            placeholderTextColor={theme.colors.secondary}
           />
         </View>
         <View style={styles.buttonBox}>
