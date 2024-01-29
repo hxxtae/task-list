@@ -1,7 +1,7 @@
 import { Entypo } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import PropTypes from 'prop-types';
 
 import { CategoryIdState, TaskData } from '../../../../global/atom';
@@ -11,7 +11,7 @@ CategoryList.propTypes = {
 }
 
 export default function CategoryList({ closeModal }) {
-  const setCategoryId = useSetRecoilState(CategoryIdState);
+  const [categoryId, setCategoryId] = useRecoilState(CategoryIdState);
   const taskData = useRecoilValue(TaskData);
   const theme = useTheme();
 
@@ -26,7 +26,7 @@ export default function CategoryList({ closeModal }) {
       <ScrollView style={styles.categoryList} showsVerticalScrollIndicator={false}>
         {Object.keys(taskData).slice(0).map(id => (
           <Pressable key={id} style={styles.categoryItem} onPress={() => onClickCategory(id)}>
-            <Text style={styles.categoryText(theme)}>{taskData[id].title}</Text>
+            <Text style={styles.categoryText(theme, categoryId === id)}>{taskData[id].title}</Text>
           </Pressable>
         ))}
       </ScrollView>
@@ -48,9 +48,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingVertical: 10,
   },
-  categoryText: (theme) => ({
+  categoryText: (theme, thisId) => ({
     fontSize: 18,
     fontWeight: '500',
-    color: `${theme.colors.text}`,
+    color: `${thisId ? theme.colors.primary : theme.colors.text}`,
   })
 })

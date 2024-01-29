@@ -60,7 +60,7 @@ export default function CardShift({ checkedState, setCheckedState, children }) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.checkBoxContainer(theme)}>
-        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={handleOfCheck} color='black' />
+        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={handleOfCheck} color={theme.colors.primary} />
       </View>
       <Animated.View
         style={{...styles.cardShiftContainer, transform: [{ translateX: translateX }]}}
