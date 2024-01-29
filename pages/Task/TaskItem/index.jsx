@@ -71,11 +71,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-  emptyView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   itemSetting: (theme) => ({
     position: 'absolute',
     flex: 1,

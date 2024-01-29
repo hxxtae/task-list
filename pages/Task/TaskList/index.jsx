@@ -4,22 +4,22 @@ import { useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import useMutateTask from '../../../hooks/useMutateTask';
-import { useSetRecoilState } from 'recoil';
-import { TaskIdState } from '../../../global/atom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { CategoryIdState, TaskIdState } from '../../../global/atom';
 import CardShift from '../../../components/CardShift';
 import TaskItem from '../TaskItem';
 
 TaskList.propTypes = {
-  categoryId: PropTypes.string.isRequired,
   tasks: PropTypes.object,
 }
 
-export default function TaskList({ categoryId, tasks = {} }) {
+export default function TaskList({ tasks = {} }) {
   const theme = useTheme();
+  const navigation = useNavigation();
   const [itemSetting, setItemSetting] = useState('');
+  const categoryId = useRecoilValue(CategoryIdState);
   const setTaskId = useSetRecoilState(TaskIdState);
   const { onTaskOfChecked, onTaskOfDelete } = useMutateTask();
-  const navigation = useNavigation();
 
   // NOTE: Task 목록 설정 클릭
   const handleTaskSettingPress = (taskId) => {
@@ -69,7 +69,7 @@ export default function TaskList({ categoryId, tasks = {} }) {
   const emptyList = () => {
     return (
       <View style={styles.emptyView}>
-        <Text style={styles.emptyText(theme)}>Empty</Text>
+        <Text style={styles.emptyText(theme)}>Empty Task</Text>
       </View>
     )
   }
@@ -108,6 +108,11 @@ export default function TaskList({ categoryId, tasks = {} }) {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+  },
+  emptyView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   emptyText: (theme) => ({
     fontSize: 16,

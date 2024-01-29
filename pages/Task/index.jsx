@@ -27,10 +27,15 @@ export default function Task() {
   // NOTE: Task 데이터 가져오기
   useEffect(() => {
     const initTask = async () => {
-      await initSetStorage();
-      const data = await getStorage();
-      setTaskData(data);
-      setCategoryId(Object.keys(data)[0] ?? 'C-000000');
+      const dbData = await getStorage();
+      if (typeof dbData === 'object' && Object.keys(dbData).length >= 1) {
+        setTaskData(dbData);
+        setCategoryId(Object.keys(dbData)[0]);
+        return;
+      }
+      const initData = await initSetStorage();
+      setTaskData(initData);
+      setCategoryId(Object.keys(initData)[0]);
     }
     initTask();
   }, []);
@@ -44,7 +49,7 @@ export default function Task() {
         <TaskBar barState={getCheckedCount()} />
       </View>
       <View style={styles.section3}>
-        <TaskList categoryId={categoryId} tasks={taskData[categoryId]?.list} />
+        <TaskList tasks={taskData[categoryId]?.list} />
       </View>
     </SafeAreaView>
   )

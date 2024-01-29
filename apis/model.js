@@ -1,4 +1,4 @@
-import { initData } from './dumydata';
+import { initData } from './initData';
 import AsyncStorageStatic from '@react-native-async-storage/async-storage';
 
 export const fetchTaskData = async () => {
@@ -29,7 +29,7 @@ export const setStorage = async (data) => {
 
 // 스토리지에서 Task 데이터 불러오기
 export const getStorage = async () => {
-  return  JSON.parse(await AsyncStorageStatic.getItem('myTask'));
+  return JSON.parse(await AsyncStorageStatic.getItem('myTask'));
 }
 
 // 스토리지 초기화
@@ -37,6 +37,7 @@ export const getStorage = async () => {
 // - value: {}
 export const initSetStorage = async () => {
   await AsyncStorageStatic.setItem('myTask', JSON.stringify(initData));
+  return initData;
 }
 
 
