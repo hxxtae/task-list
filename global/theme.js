@@ -19,7 +19,7 @@ export const DarkThemes = {
     ...DarkTheme.colors,
     primary: '#597EDB',
     secondary: '#767676',
-    background: '#111111',
+    background: '#04060B',
     text: '#ffffff',
     card: '#121519',
     danger: '#C92836'

@@ -43,7 +43,7 @@ export default function TaskItem({
     <View style={styles.item(theme)}>
       <Text style={[styles.itemText, styles.text(theme, isChecked)]}>{tasks[taskId].name}</Text>
       <Pressable onPress={() => onSetting(taskId)}>
-        <Feather name="more-vertical" size={24} color="black" />
+        <Feather name="more-vertical" size={24} color={theme.colors.text} />
       </Pressable>
       {isSetting && onTaskSetting(taskId)}
     </View>

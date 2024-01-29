@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   bottomSheetContainer: (height, theme) => ({
     height: height ?? 0,
-    backgroundColor: `${theme.colors.background}`,
+    backgroundColor: `${theme.colors.card}`,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   })
