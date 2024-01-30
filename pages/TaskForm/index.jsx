@@ -76,6 +76,8 @@ export default function TaskForm({ workKind }) {
             returnKeyType='done'
             autoCapitalize='words'
             placeholderTextColor={theme.colors.secondary}
+            maxLength={50}
+            textAlignVertical='top'
           />
         </View>
         <View style={styles.inputBox}>

@@ -62,6 +62,8 @@ export default function CategoryForm({ workKind }) {
             returnKeyType='done'
             autoCapitalize='words'
             placeholderTextColor={theme.colors.secondary}
+            maxLength={15}
+            textAlignVertical='top'
           />
         </View>
         <View style={styles.buttonBox}>

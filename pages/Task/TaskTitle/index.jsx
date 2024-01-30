@@ -37,11 +37,11 @@ export default function TaskTitle() {
           hitSlop={20}
         >
           { taskData[categoryId]?.title ?
-            <Text style={styles.headerFont(theme)}>{taskData[categoryId]?.title}</Text> :
+            <Text style={styles.headerFont(theme)} numberOfLines={1}>{taskData[categoryId]?.title}</Text> :
             <Text style={styles.headerFont(theme)}>Loading...</Text>}
             <Entypo name="chevron-small-down" size={30} color={theme.colors.text} />
         </Pressable>
-        <TouchableOpacity style={styles.rightIcon} hitSlop={10} onPress={() => categorySettingModalProps.setModalVisible(true)}>
+        <TouchableOpacity style={styles.setting} hitSlop={10} onPress={() => categorySettingModalProps.setModalVisible(true)}>
           <Feather name="settings" size={24} color={theme.colors.text} />
         </TouchableOpacity>
       </View>
@@ -68,10 +68,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     opacity: pressed ? 0.4 : 1,
+    flexShrink: 1,
   }),
   headerFont: (theme) => ({
     color: `${theme.colors.text}`,
     fontSize: 35,
     fontWeight: '600',
-  })
+  }),
+  setting: {
+    padding: 10,
+    borderRadius: 8,
+  }
 })

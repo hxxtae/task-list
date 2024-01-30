@@ -41,7 +41,10 @@ export default function TaskItem({
 
   return (
     <View style={styles.item(theme)}>
-      <Text style={[styles.itemText, styles.text(theme, isChecked)]}>{tasks[taskId].name}</Text>
+      <Text
+        style={[styles.itemText, styles.text(theme, isChecked)]}
+        numberOfLines={2}
+      >{tasks[taskId].name}</Text>
       <Pressable onPress={() => onSetting(taskId)}>
         <Feather name="more-vertical" size={24} color={theme.colors.text} />
       </Pressable>
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
   text: (theme, isChecked) => ({
     color: `${isChecked ? theme.colors.secondary : theme.colors.text}`,
     textDecorationLine: `${isChecked ? 'line-through' : 'none'}`,
+    flexShrink: 1,
   }),
   itemText: {
     fontSize: 16,
