@@ -28,14 +28,14 @@ export default function Task() {
   useEffect(() => {
     const initTask = async () => {
       const dbData = await getStorage();
-      if (typeof dbData === 'object' && Object.keys(dbData).length >= 1) {
-        setTaskData(dbData);
-        setCategoryId(Object.keys(dbData)[0]);
+      if (!dbData) {
+        const initData = await initSetStorage();
+        setTaskData(initData);
+        setCategoryId(Object.keys(initData)[0]);
         return;
       }
-      const initData = await initSetStorage();
-      setTaskData(initData);
-      setCategoryId(Object.keys(initData)[0]);
+      setTaskData(dbData);
+      setCategoryId(Object.keys(dbData)[0]);
     }
     initTask();
   }, []);
