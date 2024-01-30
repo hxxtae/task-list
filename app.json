@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "task-list",
+    "name": "Tasks",
     "slug": "task-list",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#e7e7e7"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -18,6 +18,9 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "task.list.app",
+      "permissions": [ "TODO_LIST" ],
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -25,6 +28,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a9747cc4-a275-4153-a8ab-a97909f2642c"
+      }
     }
   }
 }
