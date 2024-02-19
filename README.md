@@ -2,7 +2,22 @@
   <img src="https://github.com/hxxtae/task-list/assets/79623316/424d2b88-743f-490c-832d-9630b8af81dd" />
 </div>
 
-# Task List
+<br>
+
+<div align="center">
+  <h1>Task List</h1>
+</div>
+
+<div align="center">
+  <a href="https://github.com/hxxtae/task-list/commits/main/">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/hxxtae/task-list?style=for-the-badge&labelColor=%23111&color=%23fff" />
+  </a>
+  <a href="https://github.com/hxxtae/task-list">
+    <img alt="Static Badge" src="https://img.shields.io/badge/TASK%20LIST-%20?style=for-the-badge&logo=github&labelColor=%23000&color=%23fff">
+  </a>
+</div>
+
+<br>
 
 오늘 할 일을 기록하고, 완료한 작업은 완료 되었음을 표시하여 현재 작업 진행 목록을 확인할 수 있습니다.
 
