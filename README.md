@@ -127,5 +127,16 @@ Figma를 사용하여 앱 컴포넌트의 구조에 따른 User Interface를 설
  ┃ ┗ 📜index.jsx
 ```
 
+## App Image
 
+|   |   |   |
+| - | - | - |
+| ![1]  | ![2]  | ![3]  |
+| ![4]  | ![5]  | ![6]  |
 
+[1]: https://github.com/hxxtae/task-list/assets/79623316/8443614b-5677-453c-ad69-6ff599f97398
+[2]: https://github.com/hxxtae/task-list/assets/79623316/5808d3da-a9a5-44bf-b847-8dbcf77e5395
+[3]: https://github.com/hxxtae/task-list/assets/79623316/001e55ab-b7a3-4347-a78c-0f8e4d649241
+[4]: https://github.com/hxxtae/task-list/assets/79623316/0e0109b7-1d72-40df-a997-7ec0697f743a
+[5]: https://github.com/hxxtae/task-list/assets/79623316/1b16b8ed-9d6c-41ba-afd6-ebfbe2041778
+[6]: https://github.com/hxxtae/task-list/assets/79623316/a42d9e86-685c-498f-868b-6734e675f038
